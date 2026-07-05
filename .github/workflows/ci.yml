@@ -4,7 +4,40 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      # swarm-choreo depends on 3 sibling kotoba-lang libs via :local/root
+      # ("../kami-autodrive", "../robotics", "../org-ros" relative to this
+      # repo's deps.edn), and robotics itself further depends on ../html +
+      # ../css (its operator-console/export namespaces) the same way.
+      # :local/root is not a fetchable coordinate (unlike :git/url deps,
+      # which Clojure CLI resolves on its own), so CI must lay the same
+      # sibling layout on disk itself: check this repo out to
+      # `swarm-choreo/` and every :local/root dependency (direct AND
+      # transitive) out to a path directory alongside it, all under
+      # $GITHUB_WORKSPACE. Same pattern kotoba-lang/teleop's ci.yml already
+      # uses for the same reason.
       - uses: actions/checkout@v4
+        with:
+          path: swarm-choreo
+      - uses: actions/checkout@v4
+        with:
+          repository: kotoba-lang/kami-autodrive
+          path: kami-autodrive
+      - uses: actions/checkout@v4
+        with:
+          repository: kotoba-lang/robotics
+          path: robotics
+      - uses: actions/checkout@v4
+        with:
+          repository: kotoba-lang/org-ros
+          path: org-ros
+      - uses: actions/checkout@v4
+        with:
+          repository: kotoba-lang/html
+          path: html
+      - uses: actions/checkout@v4
+        with:
+          repository: kotoba-lang/css
+          path: css
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -13,4 +46,6 @@ jobs:
         with:
           cli: latest
       - run: clojure -M:lint
+        working-directory: swarm-choreo
       - run: clojure -M:test
+        working-directory: swarm-choreo
