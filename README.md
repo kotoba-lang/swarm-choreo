@@ -63,6 +63,15 @@ does not modify `autodrive.fleet` (or `kami-autodrive`/`robotics`/
   `mavros/setpoint_position/local` (`geometry_msgs/msg/PoseStamped`), the
   real MAVROS topic a PX4/ArduPilot vehicle listens to for an
   offboard/guided position setpoint, via `org-ros`'s rosbridge codec.
+- `kotoba.swarm-choreo.physics-check` — a stronger, slower check to run on
+  segments `validate` already passed: does `kami-autodrive`'s *real*
+  closed-loop `:drone` autopilot + multirotor plant actually reach a
+  segment's target within its scheduled time budget (`horizontal-segment-
+  feasible?`, `show-segments-feasible`), not just `validate`'s straight-
+  line finite-difference approximation? `kami-autodrive`'s plant models no
+  altitude channel at all, so vertical (climb/descent) rate is checked
+  separately (`vertical-feasible?`) against swarm-choreo's own
+  conservative assumption, not a `kami-autodrive` constant.
 
 ## Contract
 
@@ -113,6 +122,14 @@ are invisible to a pure-data simulation, and two trajectories can in
 principle pass closer than any sampled instant between two samples. A
 real operator must still carry independent safety margins — this library
 makes a show's plan checkable, not a real flight safe by itself.
+
+`physics-check` closes part of that gap by running the real GNC stack
+instead of a straight-line approximation, but it is still a horizontal-
+only, single-performer, obstacle-free simulation — it does not check
+inter-performer separation under real closed-loop dynamics (that stays
+`validate`'s idealized-trajectory job), and it has no altitude dynamics
+to check a climb rate against at all (that check is swarm-choreo's own
+assumption, not `kami-autodrive`'s).
 
 ## License
 
