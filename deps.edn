@@ -1,7 +1,10 @@
 {:paths ["src"]
- :deps {io.github.kotoba-lang/kami-autodrive {:local/root "../kami-autodrive"}
-        io.github.kotoba-lang/robotics       {:local/root "../robotics"}
-        io.github.kotoba-lang/org-ros        {:local/root "../org-ros"}}
+ :deps {io.github.kotoba-lang/kami-autodrive {:git/url "https://github.com/kotoba-lang/kami-autodrive.git"
+                                     :git/sha "30a86d79cfa17a84bdfd3a3ba56fdde91bdf8b5b"}
+        io.github.kotoba-lang/robotics       {:git/url "https://github.com/kotoba-lang/robotics.git"
+                                     :git/sha "1d1f93e3c9ac06ce475ebcfd4df1d908602792d5"}
+        io.github.kotoba-lang/org-ros        {:git/url "https://github.com/kotoba-lang/org-ros.git"
+                                     :git/sha "f8f643a5070ae7fe67d2cdc36a19b79a488a169f"}}
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner
