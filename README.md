@@ -138,6 +138,6 @@ Apache License 2.0.
 ## Test
 
 ```bash
-clojure -M:lint
-clojure -M:test
+kbb -M:lint
+kbb -M:test
 ```
