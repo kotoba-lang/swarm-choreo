@@ -1,5 +1,5 @@
 (ns kotoba.swarm-choreo.ros-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kotoba.ros.rosbridge :as rosbridge]
             [kotoba.swarm-choreo.ros :as sros]))
 
