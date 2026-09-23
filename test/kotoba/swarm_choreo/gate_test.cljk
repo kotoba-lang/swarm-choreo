@@ -1,5 +1,5 @@
 (ns kotoba.swarm-choreo.gate-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [kotoba.robotics :as rob]
             [kotoba.swarm-choreo.gate :as gate]))
 

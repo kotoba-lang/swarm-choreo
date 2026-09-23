@@ -1,5 +1,5 @@
 (ns kotoba.swarm-choreo.show-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kotoba.swarm-choreo.show :as show]))
 
 (deftest waypoint-test
